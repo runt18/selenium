@@ -48,7 +48,9 @@ class WebDriver(RemoteWebDriver):
           Download at https://developer.blackberry.com/html5/downloads/
     """
     def __init__(self, device_password, bb_tools_dir=None,
-                 hostip='169.254.0.1', port=1338, desired_capabilities={}):
+                 hostip='169.254.0.1', port=1338, desired_capabilities=None):
+        if desired_capabilities is None:
+            desired_capabilities = {}
         remote_addr = 'http://{}:{}'.format(hostip, port)
 
         filename = 'blackberry-deploy'

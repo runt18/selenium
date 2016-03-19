@@ -34,10 +34,10 @@ class Service(service.Service):
 
         self.service_args = service_args or []
         if log_path:
-          self.service_args.append('--log-path=%s' % log_path)
+          self.service_args.append('--log-path={0!s}'.format(log_path))
 
         service.Service.__init__(self, executable_path, port=port, env=env,
                                  start_error_message="Please see https://sites.google.com/a/chromium.org/chromedriver/home")
 
     def command_line_args(self):
-        return ["--port=%d" % self.port] + self.service_args
+        return ["--port={0:d}".format(self.port)] + self.service_args

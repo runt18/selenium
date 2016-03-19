@@ -30,12 +30,12 @@ class WebDriverException(Exception):
         self.stacktrace = stacktrace
 
     def __str__(self):
-        exception_msg = "Message: %s\n" % self.msg
+        exception_msg = "Message: {0!s}\n".format(self.msg)
         if self.screen is not None:
             exception_msg += "Screenshot: available via screen\n"
         if self.stacktrace is not None:
             stacktrace = "\n".join(self.stacktrace)
-            exception_msg += "Stacktrace:\n%s" % stacktrace
+            exception_msg += "Stacktrace:\n{0!s}".format(stacktrace)
         return exception_msg
 
 class ErrorInResponseException(WebDriverException):
@@ -130,7 +130,7 @@ class UnexpectedAlertPresentException(WebDriverException):
         self.alert_text = alert_text
 
     def __str__(self):
-        return "Alert Text: %s\n%s" % (self.alert_text, str(super(WebDriverException, self)))
+        return "Alert Text: {0!s}\n{1!s}".format(self.alert_text, str(super(WebDriverException, self)))
 
 class NoAlertPresentException(WebDriverException):
     """

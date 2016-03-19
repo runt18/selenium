@@ -263,7 +263,7 @@ class AlertsTest(unittest.TestCase):
             raise Exception("UnexpectedAlertPresentException should have been thrown")
         except UnexpectedAlertPresentException as uape:
             self.assertEquals(value, uape.alert_text)
-            self.assertTrue(str(uape).startswith("Alert Text: %s" % value))
+            self.assertTrue(str(uape).startswith("Alert Text: {0!s}".format(value)))
 
     def _waitForAlert(self):
         return WebDriverWait(self.driver, 3).until(EC.alert_is_present())

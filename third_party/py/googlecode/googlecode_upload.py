@@ -88,11 +88,11 @@ def upload(file, project_name, user_name, password, summary, labels=None):
 
   content_type, body = encode_upload_request(form_fields, file)
 
-  upload_host = '%s.googlecode.com' % project_name
+  upload_host = '{0!s}.googlecode.com'.format(project_name)
   upload_uri = '/files'
-  auth_token = base64.b64encode('%s:%s'% (user_name, password))
+  auth_token = base64.b64encode('{0!s}:{1!s}'.format(user_name, password))
   headers = {
-    'Authorization': 'Basic %s' % auth_token,
+    'Authorization': 'Basic {0!s}'.format(auth_token),
     'User-Agent': 'Googlecode.com uploader v0.9.4',
     'Content-Type': content_type,
     }
@@ -127,7 +127,7 @@ def encode_upload_request(fields, file_path):
   for key, value in fields:
     body.extend(
       ['--' + BOUNDARY,
-       'Content-Disposition: form-data; name="%s"' % key,
+       'Content-Disposition: form-data; name="{0!s}"'.format(key),
        '',
        value,
        ])
@@ -140,8 +140,7 @@ def encode_upload_request(fields, file_path):
 
   body.extend(
     ['--' + BOUNDARY,
-     'Content-Disposition: form-data; name="filename"; filename="%s"'
-     % file_name,
+     'Content-Disposition: form-data; name="filename"; filename="{0!s}"'.format(file_name),
      # The upload server determines the mime-type, no need to set it.
      'Content-Type: application/octet-stream',
      '',
@@ -151,7 +150,7 @@ def encode_upload_request(fields, file_path):
   # Finalize the form body
   body.extend(['--' + BOUNDARY + '--', ''])
 
-  return 'multipart/form-data; boundary=%s' % BOUNDARY, CRLF.join(body)
+  return 'multipart/form-data; boundary={0!s}'.format(BOUNDARY), CRLF.join(body)
 
 
 def upload_find_auth(file_path, project_name, summary, labels=None,
@@ -238,11 +237,11 @@ def main():
                                          options.user, options.password)
   if url:
     print 'The file was uploaded successfully.'
-    print 'URL: %s' % url
+    print 'URL: {0!s}'.format(url)
     return 0
   else:
     print 'An error occurred. Your file was not uploaded.'
-    print 'Google Code upload server said: %s (%s)' % (reason, status)
+    print 'Google Code upload server said: {0!s} ({1!s})'.format(reason, status)
     return 1
 
 

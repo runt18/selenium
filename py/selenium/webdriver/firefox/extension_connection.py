@@ -47,7 +47,7 @@ class ExtensionConnection(RemoteConnection):
         self.profile.add_extension()
 
         self.binary.launch_browser(self.profile)
-        _URL = "http://%s:%d/hub" % (HOST, PORT)
+        _URL = "http://{0!s}:{1:d}/hub".format(HOST, PORT)
         RemoteConnection.__init__(
             self, _URL, keep_alive=True)
 
@@ -65,7 +65,7 @@ class ExtensionConnection(RemoteConnection):
     @classmethod
     def connect_and_quit(self):
         """Connects to an running browser and quit immediately."""
-        self._request('%s/extensions/firefox/quit' % _URL)
+        self._request('{0!s}/extensions/firefox/quit'.format(_URL))
     
     @classmethod
     def is_connectable(self):

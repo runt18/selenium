@@ -35,16 +35,16 @@ class Service(service.Service):
            Default is "stdout"."""
         self.service_args = []
         if host is not None:
-            self.service_args.append("--host=%s" % host)
+            self.service_args.append("--host={0!s}".format(host))
         if log_level is not None:
-            self.service_args.append("--log-level=%s" % log_level)
+            self.service_args.append("--log-level={0!s}".format(log_level))
         if log_file is not None:
-            self.service_args.append("--log-file=%s" % log_file)
+            self.service_args.append("--log-file={0!s}".format(log_file))
 
         service.Service.__init__(self, executable_path, port=port,
                                  start_error_message="Please download from http://selenium-release.storage.googleapis.com/index.html and read up at https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver")
 
     def command_line_args(self):
-        return ["--port=%d" % self.port] + self.service_args
+        return ["--port={0:d}".format(self.port)] + self.service_args
 
 

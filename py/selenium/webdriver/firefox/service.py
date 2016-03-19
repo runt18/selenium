@@ -43,8 +43,8 @@ class Service(service.Service):
 
     def command_line_args(self):
         if self.firefox_binary:
-            return ["-b", self.firefox_binary, '--webdriver-port', "%d" % self.port]
-        return ['--webdriver-port', "%d" % self.port]
+            return ["-b", self.firefox_binary, '--webdriver-port', "{0:d}".format(self.port)]
+        return ['--webdriver-port', "{0:d}".format(self.port)]
 
     def send_remote_shutdown_command(self):
         pass

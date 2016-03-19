@@ -699,15 +699,15 @@ class WebDriver(object):
         if self.w3c:
             if by == By.ID:
                 by = By.CSS_SELECTOR
-                value = '[id="%s"]' % value
+                value = '[id="{0!s}"]'.format(value)
             elif by == By.TAG_NAME:
                 by = By.CSS_SELECTOR
             elif by == By.CLASS_NAME:
                 by = By.CSS_SELECTOR
-                value = ".%s" % value
+                value = ".{0!s}".format(value)
             elif by == By.NAME:
                 by = By.CSS_SELECTOR
-                value = '[name="%s"]' % value
+                value = '[name="{0!s}"]'.format(value)
         return self.execute(Command.FIND_ELEMENT,
                              {'using': by, 'value': value})['value']
 
@@ -725,15 +725,15 @@ class WebDriver(object):
         if self.w3c:
             if by == By.ID:
                 by = By.CSS_SELECTOR
-                value = '[id="%s"]' % value
+                value = '[id="{0!s}"]'.format(value)
             elif by == By.TAG_NAME:
                 by = By.CSS_SELECTOR
             elif by == By.CLASS_NAME:
                 by = By.CSS_SELECTOR
-                value = ".%s" % value
+                value = ".{0!s}".format(value)
             elif by == By.NAME:
                 by = By.CSS_SELECTOR
-                value = '[name="%s"]' % value
+                value = '[name="{0!s}"]'.format(value)
 
         return self.execute(Command.FIND_ELEMENTS,
                              {'using': by, 'value': value})['value']

@@ -32,7 +32,7 @@ class ExecutingJavaScriptTests(unittest.TestCase):
         result = self.driver.execute_script("return document.title")
 
         self.assertTrue(type(result) == str,
-            "The type of the result is %s" % type(result))
+            "The type of the result is {0!s}".format(type(result)))
         self.assertEqual("XHTML Test Page", result)
 
 

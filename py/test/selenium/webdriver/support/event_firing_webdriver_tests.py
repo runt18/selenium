@@ -37,9 +37,9 @@ class EventFiringWebDriverTests(unittest.TestCase):
 
         class TestListener(AbstractEventListener):
             def before_navigate_to(self, url, driver):
-                log.write(("before_navigate_to %s" % url.split("/")[-1]).encode())
+                log.write(("before_navigate_to {0!s}".format(url.split("/")[-1])).encode())
             def after_navigate_to(self, url, driver):
-                log.write(("after_navigate_to %s" % url.split("/")[-1]).encode())
+                log.write(("after_navigate_to {0!s}".format(url.split("/")[-1])).encode())
             def before_navigate_back(self, driver):
                 log.write(b"before_navigate_back")
             def after_navigate_back(self, driver):
@@ -113,9 +113,9 @@ class EventFiringWebDriverTests(unittest.TestCase):
 
         class TestListener(AbstractEventListener):
             def before_find(self, by, value, driver):
-                log.write(("before_find by %s %s" % (by, value)).encode())
+                log.write(("before_find by {0!s} {1!s}".format(by, value)).encode())
             def after_find(self, by, value, driver):
-                log.write(("after_find by %s %s" % (by, value)).encode())
+                log.write(("after_find by {0!s} {1!s}".format(by, value)).encode())
 
         ef_driver = EventFiringWebDriver(self.driver, TestListener())
         ef_driver.get(self._pageURL("simpleTest"))

@@ -41,7 +41,7 @@ class Service(object):
         """
         Gets the url of the Service
         """
-        return "http://localhost:%d" % self.port
+        return "http://localhost:{0:d}".format(self.port)
 
     def command_line_args(self):
         raise NotImplemented("This method needs to be implemented in a sub class")
@@ -65,27 +65,26 @@ class Service(object):
         except OSError as err:
             if err.errno == errno.ENOENT:
                 raise WebDriverException(
-                    "'%s' executable needs to be in PATH. %s" % (
+                    "'{0!s}' executable needs to be in PATH. {1!s}".format(
                         os.path.basename(self.path), self.start_error_message)
                 )
             elif err.errno == errno.EACCES:
                 raise WebDriverException(
-                    "'%s' executable may have wrong permissions. %s" % (
+                    "'{0!s}' executable may have wrong permissions. {1!s}".format(
                         os.path.basename(self.path), self.start_error_message)
                 )
             else:
                 raise
         except Exception as e:
             raise WebDriverException(
-                "The executable %s needs to be available in the path. %s\n%s" %
-                (os.path.basename(self.path), self.start_error_message, str(e))
+                "The executable {0!s} needs to be available in the path. {1!s}\n{2!s}".format(os.path.basename(self.path), self.start_error_message, str(e))
                 )
         count = 0
         while not self.is_connectable():
             count += 1
             time.sleep(1)
             if count == 30:
-                raise WebDriverException("Can not connect to the Service %s" % self.path)
+                raise WebDriverException("Can not connect to the Service {0!s}".format(self.path))
 
     def is_connectable(self):
         return utils.is_connectable(self.port)
@@ -96,7 +95,7 @@ class Service(object):
         except ImportError:
             import urllib2 as url_request
 
-        url_request.urlopen("http://127.0.0.1:%d/shutdown" % self.port)
+        url_request.urlopen("http://127.0.0.1:{0:d}/shutdown".format(self.port))
         count = 0
         while self.is_connectable():
             if count == 30:

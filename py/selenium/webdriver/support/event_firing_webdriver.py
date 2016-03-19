@@ -151,13 +151,13 @@ class EventFiringWebDriver(object):
         return self.find_elements(by=By.CSS_SELECTOR, value=css_selector)
     
     def _dispatch(self, l_call, l_args, d_call, d_args):
-        getattr(self._listener, "before_%s" % l_call)(*l_args)
+        getattr(self._listener, "before_{0!s}".format(l_call))(*l_args)
         try:
             result = getattr(self._driver, d_call)(*d_args)
         except Exception as e:
             self._listener.on_exception(e, self._driver)
             raise e
-        getattr(self._listener, "after_%s" % l_call)(*l_args)
+        getattr(self._listener, "after_{0!s}".format(l_call))(*l_args)
         return  _wrap_elements(result, self)
     
     def _unwrap_element_args(self, args):
@@ -291,13 +291,13 @@ class EventFiringWebElement(object):
         return self.find_elements(by=By.CSS_SELECTOR, value=css_selector)
     
     def _dispatch(self, l_call, l_args, d_call, d_args):
-        getattr(self._listener, "before_%s" % l_call)(*l_args)
+        getattr(self._listener, "before_{0!s}".format(l_call))(*l_args)
         try:
             result = getattr(self._webelement, d_call)(*d_args)
         except Exception as e:
             self._listener.on_exception(e, self._driver)
             raise e
-        getattr(self._listener, "after_%s" % l_call)(*l_args)
+        getattr(self._listener, "after_{0!s}".format(l_call))(*l_args)
         return  _wrap_elements(result, self._ef_driver)
     
     def __setattr__(self, item, value):

@@ -62,7 +62,7 @@ class HtmlOnlyHandler(BaseHTTPRequestHandler):
             self.wfile.write(html.read().encode('utf-8'))
             html.close()
         except IOError:
-            self.send_error(404, 'File Not Found: %s' % path)
+            self.send_error(404, 'File Not Found: {0!s}'.format(path))
 
     def log_message(self, format, *args):
         """Override default to avoid trashing stderr"""
@@ -82,8 +82,7 @@ class SimpleWebServer(object):
                 self.port = port
                 break
             except socket.error:
-                LOGGER.debug("port %d is in use, trying to next one"
-                              % port)
+                LOGGER.debug("port {0:d} is in use, trying to next one".format(port))
                 port += 1
 
         self.thread = threading.Thread(target=self._run_web_server)
@@ -104,14 +103,14 @@ class SimpleWebServer(object):
         self.stop_serving = True
         try:
             # This is to force stop the server loop
-            urllib_request.URLopener().open("http://%s:%d" % (self.host,self.port))
+            urllib_request.URLopener().open("http://{0!s}:{1:d}".format(self.host, self.port))
         except IOError:
             pass
         LOGGER.info("Shutting down the webserver")
         self.thread.join()
 
     def where_is(self, path):
-        return "http://%s:%d/%s" % (self.host, self.port, path)
+        return "http://{0!s}:{1:d}/{2!s}".format(self.host, self.port, path)
 
 def main(argv=None):
     from optparse import OptionParser
@@ -123,7 +122,7 @@ def main(argv=None):
 
     parser = OptionParser("%prog [options]")
     parser.add_option("-p", "--port", dest="port", type="int",
-            help="port to listen (default: %s)" % DEFAULT_PORT,
+            help="port to listen (default: {0!s})".format(DEFAULT_PORT),
             default=DEFAULT_PORT)
 
     opts, args = parser.parse_args(argv[1:])
@@ -132,7 +131,7 @@ def main(argv=None):
 
     server = SimpleWebServer(opts.port)
     server.start()
-    print("Server started on port %s, hit CTRL-C to quit" % opts.port)
+    print("Server started on port {0!s}, hit CTRL-C to quit".format(opts.port))
     try:
         while 1:
             sleep(0.1)

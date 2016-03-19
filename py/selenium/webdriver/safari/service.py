@@ -54,7 +54,7 @@ class Service(object):
             kwargs.update(stdout=devnull_out,
                           stderr=devnull_out)
         try:
-            self.process = subprocess.Popen(["java", "-jar", self.path, "-port", "%s" % self.port],
+            self.process = subprocess.Popen(["java", "-jar", self.path, "-port", "{0!s}".format(self.port)],
                                             **kwargs)
         except:
             raise WebDriverException(
@@ -72,7 +72,7 @@ class Service(object):
         """
         Gets the url of the SafariDriver Service
         """
-        return "http://localhost:%d/wd/hub" % self.port
+        return "http://localhost:{0:d}/wd/hub".format(self.port)
 
     def stop(self):
         """

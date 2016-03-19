@@ -64,15 +64,15 @@ class CookieTest(unittest.TestCase):
         self.assertFalse(self.driver.get_cookies())
 
     def testShouldGetCookieByName(self): 
-        key = "key_%d" % int(random.random()*10000000)
+        key = "key_{0:d}".format(int(random.random()*10000000))
         self.driver.execute_script("document.cookie = arguments[0] + '=set';", key)
 
         cookie = self.driver.get_cookie(key)
         self.assertEquals("set", cookie["value"])
 
     def testGetAllCookies(self):
-        key1 = "key_%d" % int(random.random()*10000000)
-        key2 = "key_%d" % int(random.random()*10000000)
+        key1 = "key_{0:d}".format(int(random.random()*10000000))
+        key2 = "key_{0:d}".format(int(random.random()*10000000))
     
         cookies = self.driver.get_cookies()
         count = len(cookies)

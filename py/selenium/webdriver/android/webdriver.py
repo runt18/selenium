@@ -37,6 +37,6 @@ class WebDriver(RemoteWebDriver):
          - desired_capabilities: Dictionary object with capabilities
         """
         RemoteWebDriver.__init__(self,
-            command_executor="http://%s:%d/wd/hub" % (host, port),
+            command_executor="http://{0!s}:{1:d}/wd/hub".format(host, port),
             desired_capabilities=desired_capabilities)
 

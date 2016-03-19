@@ -55,7 +55,7 @@ class ProxyType:
             if isinstance(attr_value, dict) and 'string' in attr_value and \
                 attr_value['string'] is not None and attr_value['string'] == value:
                 return attr_value
-        raise Exception("No proxy type is found for %s" % (value))
+        raise Exception("No proxy type is found for {0!s}".format((value)))
 
 class Proxy(object):
     """
@@ -297,8 +297,7 @@ class Proxy(object):
 
     def _verify_proxy_type_compatibility(self, compatibleProxy):
         if self.proxyType != ProxyType.UNSPECIFIED and self.proxyType != compatibleProxy:
-            raise Exception(" Specified proxy type (%s) not compatible with current setting (%s)" % \
-                                                (compatibleProxy, self.proxyType))
+            raise Exception(" Specified proxy type ({0!s}) not compatible with current setting ({1!s})".format(compatibleProxy, self.proxyType))
 
 
     def add_to_capabilities(self, capabilities):

@@ -171,17 +171,17 @@ class RemoteConnection(object):
                 netloc = socket.gethostbyname(parsed_url.hostname)
                 addr = netloc
                 if parsed_url.port:
-                    netloc += ':%d' % parsed_url.port
+                    netloc += ':{0:d}'.format(parsed_url.port)
                 if parsed_url.username:
                     auth = parsed_url.username
                     if parsed_url.password:
-                        auth += ':%s' % parsed_url.password
-                    netloc = '%s@%s' % (auth, netloc)
+                        auth += ':{0!s}'.format(parsed_url.password)
+                    netloc = '{0!s}@{1!s}'.format(auth, netloc)
                 remote_server_addr = parse.urlunparse(
                     (parsed_url.scheme, netloc, parsed_url.path,
                      parsed_url.params, parsed_url.query, parsed_url.fragment))
             except socket.gaierror:
-                LOGGER.info('Could not get IP address for host: %s' % parsed_url.hostname)
+                LOGGER.info('Could not get IP address for host: {0!s}'.format(parsed_url.hostname))
 
         self._url = remote_server_addr
         if keep_alive:
@@ -388,10 +388,10 @@ class RemoteConnection(object):
            its JSON payload.
         """
         command_info = self._commands[command]
-        assert command_info is not None, 'Unrecognised command %s' % command
+        assert command_info is not None, 'Unrecognised command {0!s}'.format(command)
         data = utils.dump_json(params)
         path = string.Template(command_info[1]).substitute(params)
-        url = '%s%s' % (self._url, path)
+        url = '{0!s}{1!s}'.format(self._url, path)
         return self._request(command_info[0], url, body=data)
 
     def _request(self, method, url, body=None):
@@ -406,7 +406,7 @@ class RemoteConnection(object):
         :Returns:
           A dictionary with the server's parsed JSON response.
         """
-        LOGGER.debug('%s %s %s' % (method, url, body))
+        LOGGER.debug('{0!s} {1!s} {2!s}'.format(method, url, body))
 
         parsed_url = parse.urlparse(url)
 
@@ -416,9 +416,8 @@ class RemoteConnection(object):
                        "Content-type": "application/json;charset=\"UTF-8\"",
                        "Accept": "application/json"}
             if parsed_url.username:
-                auth = base64.standard_b64encode(('%s:%s' %
-                       (parsed_url.username, parsed_url.password)).encode('ascii')).decode('ascii').replace('\n', '')
-                headers["Authorization"] = "Basic %s" % auth
+                auth = base64.standard_b64encode(('{0!s}:{1!s}'.format(parsed_url.username, parsed_url.password)).encode('ascii')).decode('ascii').replace('\n', '')
+                headers["Authorization"] = "Basic {0!s}".format(auth)
             if body and method != 'POST' and method != 'PUT':
                 body = None
             try:
@@ -434,7 +433,7 @@ class RemoteConnection(object):
             if parsed_url.username:
                 netloc = parsed_url.hostname
                 if parsed_url.port:
-                    netloc += ":%s" % parsed_url.port
+                    netloc += ":{0!s}".format(parsed_url.port)
                 cleaned_url = parse.urlunparse((parsed_url.scheme,
                                                    netloc,
                                                    parsed_url.path,
@@ -443,7 +442,7 @@ class RemoteConnection(object):
                                                    parsed_url.fragment))
                 password_manager = url_request.HTTPPasswordMgrWithDefaultRealm()
                 password_manager.add_password(None,
-                                              "%s://%s" % (parsed_url.scheme, netloc),
+                                              "{0!s}://{1!s}".format(parsed_url.scheme, netloc),
                                               parsed_url.username,
                                               parsed_url.password)
                 request = Request(cleaned_url, data=body.encode('utf-8'), method=method)
@@ -489,7 +488,7 @@ class RemoteConnection(object):
                     return {'status': status, 'value': body.strip()}
 
                 assert type(data) is dict, (
-                    'Invalid server response body: %s' % body)
+                    'Invalid server response body: {0!s}'.format(body))
                 # Some of the drivers incorrectly return a response
                 # with no 'value' field when they should return null.
                 if 'value' not in data:

@@ -34,8 +34,8 @@ class Select:
         """
         if webelement.tag_name.lower() != "select":
             raise UnexpectedTagNameException(
-                "Select only works on <select> elements, not on <%s>" % 
-                webelement.tag_name)
+                "Select only works on <select> elements, not on <{0!s}>".format( 
+                webelement.tag_name))
         self._el = webelement
         multi = self._el.get_attribute("multiple")
         self.is_multiple = multi and multi != "false"
@@ -72,7 +72,7 @@ class Select:
            :Args:
             - value - The value to match against
            """
-        css = "option[value =%s]" % self._escapeString(value)
+        css = "option[value ={0!s}]".format(self._escapeString(value))
         opts = self._el.find_elements(By.CSS_SELECTOR, css)
         matched = False
         for opt in opts:
@@ -81,7 +81,7 @@ class Select:
                 return
             matched = True
         if not matched:
-            raise NoSuchElementException("Cannot locate option with value: %s" % value)
+            raise NoSuchElementException("Cannot locate option with value: {0!s}".format(value))
 
     def select_by_index(self, index):
         """Select the option at the given index. This is done by examing the "index" attribute of an
@@ -99,7 +99,7 @@ class Select:
                     return
                 matched = True
         if not matched:
-            raise NoSuchElementException("Could not locate element with index %d" % index)
+            raise NoSuchElementException("Could not locate element with index {0:d}".format(index))
 
     def select_by_visible_text(self, text):
         """Select all options that display text matching the argument. That is, when given "Bar" this
@@ -110,7 +110,7 @@ class Select:
            :Args:
             - text - The visible text to match against
            """
-        xpath = ".//option[normalize-space(.) = %s]" % self._escapeString(text)
+        xpath = ".//option[normalize-space(.) = {0!s}]".format(self._escapeString(text))
         opts = self._el.find_elements(By.XPATH, xpath)
         matched = False
         for opt in opts:
@@ -124,7 +124,7 @@ class Select:
             if subStringWithoutSpace == "":
                 candidates = self.options
             else:
-                xpath = ".//option[contains(.,%s)]" % self._escapeString(subStringWithoutSpace)
+                xpath = ".//option[contains(.,{0!s})]".format(self._escapeString(subStringWithoutSpace))
                 candidates = self._el.find_elements(By.XPATH, xpath)
             for candidate in candidates:
                 if text == candidate.text:
@@ -134,7 +134,7 @@ class Select:
                     matched = True
 
         if not matched:
-            raise NoSuchElementException("Could not locate element with visible text: %s" % text)
+            raise NoSuchElementException("Could not locate element with visible text: {0!s}".format(text))
 
     def deselect_all(self):
         """Clear all selected entries. This is only valid when the SELECT supports multiple selections.
@@ -156,7 +156,7 @@ class Select:
         """
         if not self.is_multiple:
             raise NotImplementedError("You may only deselect options of a multi-select")
-        css = "option[value = %s]" % self._escapeString(value)
+        css = "option[value = {0!s}]".format(self._escapeString(value))
         opts = self._el.find_elements(By.CSS_SELECTOR, css)
         for opt in opts:
             self._unsetSelected(opt)
@@ -185,7 +185,7 @@ class Select:
         """
         if not self.is_multiple:
             raise NotImplementedError("You may only deselect options of a multi-select")
-        xpath = ".//option[normalize-space(.) = %s]" % self._escapeString(text)
+        xpath = ".//option[normalize-space(.) = {0!s}]".format(self._escapeString(text))
         opts = self._el.find_elements(By.XPATH, xpath)
         for opt in opts:
             self._unsetSelected(opt)
@@ -203,7 +203,7 @@ class Select:
             substrings = value.split("\"")
             result = ["concat("]
             for substring in substrings:
-                result.append("\"%s\"" % substring)
+                result.append("\"{0!s}\"".format(substring))
                 result.append(", '\"', ")
             result = result[0:-1]
             if value.endswith('"'):
@@ -211,9 +211,9 @@ class Select:
             return "".join(result) + ")"
 
         if '"' in value:
-            return "'%s'" % value
+            return "'{0!s}'".format(value)
 
-        return "\"%s\"" % value
+        return "\"{0!s}\"".format(value)
 
     def _get_longest_token(self, value):
         items = value.split(" ")

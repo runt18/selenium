@@ -29,7 +29,7 @@ class OpacityTests(unittest.TestCase):
         element = self.driver.find_element(By.ID, "clickJacker")
         self.assertEquals('0', element.value_of_css_property("opacity"),
                           "Precondition failed: clickJacker should be transparent.\
-                          Value was %s" % element.value_of_css_property("opacity"))
+                          Value was {0!s}".format(element.value_of_css_property("opacity")))
         element.click()
         self.assertEquals('1', element.value_of_css_property("opacity"))
 

@@ -44,14 +44,14 @@ class Service(service.Service):
 
 
     def command_line_args(self):
-        return self.service_args + ["--webdriver=%d" % self.port]
+        return self.service_args + ["--webdriver={0:d}".format(self.port)]
 
     @property
     def service_url(self):
         """
         Gets the url of the GhostDriver Service
         """
-        return "http://localhost:%d/wd/hub" % self.port
+        return "http://localhost:{0:d}/wd/hub".format(self.port)
 
     def send_remote_shutdown_command(self):
         pass

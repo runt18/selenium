@@ -79,7 +79,7 @@ class Color(object):
         elif str_.upper() in Colors.keys():
             return Colors[str_.upper()]
         else:
-            raise ValueError("Could not convert %s into color" % str_)
+            raise ValueError("Could not convert {0!s} into color".format(str_))
 
     @staticmethod
     def _from_hsl(h, s, l, a=1):
@@ -124,15 +124,15 @@ class Color(object):
 
     @property
     def rgb(self):
-        return "rgb(%d, %d, %d)" % (self.red, self.green, self.blue)
+        return "rgb({0:d}, {1:d}, {2:d})".format(self.red, self.green, self.blue)
 
     @property
     def rgba(self):
-        return "rgba(%d, %d, %d, %s)" % (self.red, self.green, self.blue, self.alpha)
+        return "rgba({0:d}, {1:d}, {2:d}, {3!s})".format(self.red, self.green, self.blue, self.alpha)
 
     @property
     def hex(self):
-        return "#%02x%02x%02x" % (self.red, self.green, self.blue)
+        return "#{0:02x}{1:02x}{2:02x}".format(self.red, self.green, self.blue)
 
     def __eq__(self, other):
         if isinstance(other, Color):
@@ -149,10 +149,10 @@ class Color(object):
         return hash((self.red, self.green, self.blue, self.alpha))
 
     def __repr__(self):
-        return "Color(red=%d, green=%d, blue=%d, alpha=%s)" % (self.red, self.green, self.blue, self.alpha)
+        return "Color(red={0:d}, green={1:d}, blue={2:d}, alpha={3!s})".format(self.red, self.green, self.blue, self.alpha)
 
     def __str__(self):
-        return "Color: %s" % self.rgba
+        return "Color: {0!s}".format(self.rgba)
 
 
 # Basic, extended and transparent colour keywords as defined by the W3C HTML4 spec

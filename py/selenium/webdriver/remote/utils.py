@@ -68,7 +68,7 @@ def unzip_to_temp_dir(zip_file_name):
         return None
 
     # Unzip the files into a temporary directory
-    LOGGER.info("Extracting zipped file: %s" % zip_file_name)
+    LOGGER.info("Extracting zipped file: {0!s}".format(zip_file_name))
     tempdir = tempfile.mkdtemp()
 
     try:
@@ -82,7 +82,7 @@ def unzip_to_temp_dir(zip_file_name):
             dest = os.path.join(tempdir, name)
             if (name.endswith(os.path.sep) and not os.path.exists(dest)):
                 os.mkdir(dest)
-                LOGGER.debug("Directory %s created." % dest)
+                LOGGER.debug("Directory {0!s} created.".format(dest))
 
         # Copy files
         for zip_name in zf.namelist():
@@ -93,15 +93,15 @@ def unzip_to_temp_dir(zip_file_name):
                     replace("/", os.path.sep))
             dest = os.path.join(tempdir, name)
             if not (name.endswith(os.path.sep)):
-                LOGGER.debug("Copying file %s......" % dest)
+                LOGGER.debug("Copying file {0!s}......".format(dest))
                 outfile = open(dest, 'wb')
                 outfile.write(zf.read(zip_name))
                 outfile.close()
-                LOGGER.debug("File %s copied." % dest)
+                LOGGER.debug("File {0!s} copied.".format(dest))
 
-        LOGGER.info("Unzipped file can be found at %s" % tempdir)
+        LOGGER.info("Unzipped file can be found at {0!s}".format(tempdir))
         return tempdir
 
     except IOError as err:
-        LOGGER.error("Error in extracting webdriver.xpi: %s" % err)
+        LOGGER.error("Error in extracting webdriver.xpi: {0!s}".format(err))
         return None

@@ -24,4 +24,4 @@ class Service(service.Service):
                                  start_error_message="Please download from http://go.microsoft.com/fwlink/?LinkId=619687 ")
 
     def command_line_args(self):
-        return ["--port=%d" % self.port]
+        return ["--port={0:d}".format(self.port)]

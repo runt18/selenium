@@ -203,9 +203,9 @@ class FirefoxProfile(object):
             return
 
         host_details = setting.split(":")
-        self.set_preference("network.proxy.%s" % key, host_details[0])
+        self.set_preference("network.proxy.{0!s}".format(key), host_details[0])
         if len(host_details) > 1:
-            self.set_preference("network.proxy.%s_port" % key, int(host_details[1]))
+            self.set_preference("network.proxy.{0!s}_port".format(key), int(host_details[1]))
 
     def _create_tempfolder(self):
         """
@@ -219,7 +219,7 @@ class FirefoxProfile(object):
         """
         with open(self.userPrefs, "w") as f:
             for key, value in user_prefs.items():
-                f.write('user_pref("%s", %s);\n' % (key, json.dumps(value)))
+                f.write('user_pref("{0!s}", {1!s});\n'.format(key, json.dumps(value)))
 
     def _read_existing_userjs(self, userjs):
         import warnings
@@ -269,7 +269,7 @@ class FirefoxProfile(object):
         # determine the addon id
         addon_details = self._addon_details(addon)
         addon_id = addon_details.get('id')
-        assert addon_id, 'The addon id could not be found: %s' % addon
+        assert addon_id, 'The addon id could not be found: {0!s}'.format(addon)
 
         # copy the addon to the profile
         extensions_path = os.path.join(self.profile_dir, 'extensions')
@@ -327,7 +327,7 @@ class FirefoxProfile(object):
             return ''.join(rc).strip()
 
         if not os.path.exists(addon_path):
-            raise IOError('Add-on path does not exist: %s' % addon_path)
+            raise IOError('Add-on path does not exist: {0!s}'.format(addon_path))
 
         try:
             if zipfile.is_zipfile(addon_path):
@@ -342,7 +342,7 @@ class FirefoxProfile(object):
                 with open(os.path.join(addon_path, 'install.rdf'), 'r') as f:
                     manifest = f.read()
             else:
-                raise IOError('Add-on path is neither an XPI nor a directory: %s' % addon_path)
+                raise IOError('Add-on path is neither an XPI nor a directory: {0!s}'.format(addon_path))
         except (IOError, KeyError) as e:
             raise AddonFormatError(str(e), sys.exc_info()[2])
 

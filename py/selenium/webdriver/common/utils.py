@@ -64,7 +64,7 @@ def is_url_connectable(port):
         import urllib2 as url_request
 
     try:
-        res = url_request.urlopen("http://127.0.0.1:%s/status" % port)
+        res = url_request.urlopen("http://127.0.0.1:{0!s}/status".format(port))
         if res.getcode() == 200:
             return True
         else:

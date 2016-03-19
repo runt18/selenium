@@ -195,7 +195,7 @@ class selenium(object):
         if browserConfigurationOptions:
             start_args.append(browserConfigurationOptions)
         if driver:
-            start_args.append('webdriver.remote.sessionid=%s' % driver.session_id)
+            start_args.append('webdriver.remote.sessionid={0!s}'.format(driver.session_id))
 
         # Sessions can take a while to start, specially in grid environments
         self.http_timeout *= 5

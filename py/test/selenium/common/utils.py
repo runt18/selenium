@@ -30,7 +30,7 @@ SERVER_PATH = "build/java/server/src/org/openqa/grid/selenium/selenium-standalon
 
 def start_server(module):
     _socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    url = "http://%s:%d/wd/hub" % (SERVER_ADDR, DEFAULT_PORT)
+    url = "http://{0!s}:{1:d}/wd/hub".format(SERVER_ADDR, DEFAULT_PORT)
     try:
         _socket.connect((SERVER_ADDR, DEFAULT_PORT))
         print("The remote driver server is already running or something else"
@@ -38,7 +38,7 @@ def start_server(module):
     except:
         print("Starting the remote driver server")
         module.server_proc = subprocess.Popen(
-            "java -jar %s" % SERVER_PATH,
+            "java -jar {0!s}".format(SERVER_PATH),
             shell=True)
 
         assert wait_for_server(url, 10), "can't connect"

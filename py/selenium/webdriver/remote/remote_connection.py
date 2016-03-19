@@ -478,7 +478,7 @@ class RemoteConnection(object):
             content_type = []
             if resp.getheader('Content-Type') is not None:
                 content_type = resp.getheader('Content-Type').split(';')
-            if not any([x.startswith('image/png') for x in content_type]):
+            if not any( x.startswith('image/png') for x in content_type):
                 try:
                     data = utils.load_json(body.strip())
                 except ValueError:
